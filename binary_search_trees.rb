@@ -12,6 +12,38 @@ class Tree
     def initialize(array)
         @root = build_tree(array)
     end
+
+    def insert(value)
+        this_node = @root
+
+        inserted = false
+        while !inserted
+
+            if value < this_node.data
+                if this_node.left_child == nil
+                    this_node.left_child = Node.new(nil, nil, array[i])
+                    inserted = true
+                else
+                    this_node = this_node.left_child
+                end
+            elsif value > this_node.data
+                if this_node.right_child == nil
+                    this_node.right_child = Node.new(nil, nil, array[i])
+                    inserted = true
+                else
+                    this_node = this_node.right_child
+                end    
+            elsif value == this_node.data
+                puts "Value is a duplicate, no insertion occured"
+            end
+        end
+    end
+
+    def delete(value)
+    end
+
+    def find(value)
+    end
 end
 
 #think russian nested dolls but with two inner compartments
@@ -46,6 +78,8 @@ def build_tree(array)
         end
     end
     return first_node
-end            
+end
+
+
 
 
