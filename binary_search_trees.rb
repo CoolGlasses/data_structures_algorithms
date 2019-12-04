@@ -180,22 +180,28 @@ class Tree
                 this_node = this_right
             else
                 array_of_nodes << this_node
-                this_node = previous_node
-                if this_node == previous_node.left_child
-                    previous_node.left_child = nil
+                
+                if this_node == max_value(@root)
+                    finished = true
                 else
-                    previous_node.right_child = nil
+                    this_node = previous_node
+                
+                    if this_node == previous_node.left_child
+                        previous_node.left_child = nil
+                    else
+                        previous_node.right_child = nil
+                    end
                 end
             end
-
-
-
-            ###how do I end this?!
-
-
-
-
-        return array_of_nodes if !block_given?
+        end
+        
+        if block_given?
+            array_of_nodes.each do |node|
+                yield at(node)
+            end
+        else
+            return array_of_nodes
+        end
     end
 
     def preorder
