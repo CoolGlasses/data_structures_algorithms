@@ -128,7 +128,7 @@ class Tree
         end
     end
 
-    def level_order(&block)
+    def level_order
         this_node = @root
         array_of_nodes = [this_node]
 
@@ -139,11 +139,26 @@ class Tree
             if node.left_child != nil
                 array_of_nodes << node.right_child
             end
-            block.call at(node)
+            if block_given?
+                yield at(node)
+            end
         end
 
-
+        if !block_given?
+            return array_of_nodes
+        end
     end
+
+    def inorder
+    end
+
+    def preorder
+    end
+
+    def postorder
+    end
+
+    
 end
 
 #think russian nested dolls but with two inner compartments
