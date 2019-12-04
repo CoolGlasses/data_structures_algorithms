@@ -75,24 +75,32 @@ class Tree
                     deleted = true
                     @root = this_left
                 else
-                    ##successer find and replace
+                    successor = min_Value(this_right)
+                    this_right.left_child = successor.right_child
+                    successor.right_child = this_right
+                    successor.left_child = this_left
+                    deleted = true
                 end
 
             elsif value == this_node.data
                 if this_left == nil && this_right == nil #if node is a leaf
-                    if previous_left == this_node ## make previous connector to this node nil -- can we make this a helper method?
+                    if previous_left == this_node
                         previous_left = nil
                     else
                         previous_right = nil
                     end
-                    deleted = true ## this node is a leaf so nothing else needs to be done
+                    deleted = true
 
-                elsif previous_left == this_node && this_right != nil ## make previous connector to this node nil -- can we make this a helper method?
-                    previous_left = min_Value(this_right)    
-
-                elsif previous_right = this_node 
-
-                deleted = true
+                elsif previous_left == this_node && this_right != nil
+                    successor = min_Value(this_right)
+                    successor.right_child = this_right
+                    successor.left_child = this_left
+                    previous_left = successor
+                    deleted = true 
+                else previous_right == this_node
+                    previous_left = this_left
+                    deleted = true 
+                end
             elsif value < this_node.data
                     previous_node = this_node
                     this_node = this_left
