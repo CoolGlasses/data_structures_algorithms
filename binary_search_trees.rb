@@ -39,7 +39,59 @@ class Tree
         end
     end
 
+    def min_value(node)
+        this_node = node
+        this_right = this_node.right_child
+        this_left = this_node.left_child
+
+        if this_left == nil
+            return this_node
+        else
+            min_Value(this_node)
+        end
+    end
+
     def delete(value)
+        this_node = @root
+
+        deleted = false
+        while !deleted
+            this_right = this_node.right_child
+            this_left = this_node.left_child
+            previous_left = previous_node.left_child
+            previous_right = previous_node.right_child
+            
+
+            if value == this_node.data
+                if this_left == nil && this_right == nil #if node is a leaf
+                    if previous_left == this_node ## make previous connector to this node nil -- can we make this a helper method?
+                        previous_left = nil
+                    else
+                        previous_right = nil
+                    end
+                    deleted = true ## this node is a leaf so nothing else needs to be done
+
+                elsif previous_left == this_node ## make previous connector to this node nil -- can we make this a helper method?
+                        previous_left = this_left
+
+                elsif previous_right = this_node 
+                    previous_right = this_right
+                    
+
+
+
+
+                deleted = true
+
+
+            elsif value < this_node.data
+                    previous_node = this_node
+                    this_node = this_node.left_child
+            elsif value > this_node.data
+                    previous_node = this_node
+                    this_node = this_node.right_child
+            end
+        end
     end
 
     def find(value)
