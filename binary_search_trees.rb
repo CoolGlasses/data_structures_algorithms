@@ -58,11 +58,27 @@ class Tree
         while !deleted
             this_right = this_node.right_child
             this_left = this_node.left_child
-            previous_left = previous_node.left_child
-            previous_right = previous_node.right_child
-            
 
-            if value == this_node.data
+            if this_node != @root
+                previous_left = previous_node.left_child
+                previous_right = previous_node.right_child
+            end
+
+            if value == @root
+                if this_right == nil && this_left == nil
+                    deleted = true
+                    return @root = nil
+                elsif this_left == nil
+                    deleted = true
+                    @root = this_right
+                elsif this_right == nil
+                    deleted = true
+                    @root = this_left
+                else
+                    ##successer find and replace
+                end
+
+            elsif value == this_node.data
                 if this_left == nil && this_right == nil #if node is a leaf
                     if previous_left == this_node ## make previous connector to this node nil -- can we make this a helper method?
                         previous_left = nil
@@ -71,25 +87,18 @@ class Tree
                     end
                     deleted = true ## this node is a leaf so nothing else needs to be done
 
-                elsif previous_left == this_node ## make previous connector to this node nil -- can we make this a helper method?
-                        previous_left = this_left
+                elsif previous_left == this_node && this_right != nil ## make previous connector to this node nil -- can we make this a helper method?
+                    previous_left = min_Value(this_right)    
 
                 elsif previous_right = this_node 
-                    previous_right = this_right
-                    
-
-
-
 
                 deleted = true
-
-
             elsif value < this_node.data
                     previous_node = this_node
-                    this_node = this_node.left_child
+                    this_node = this_left
             elsif value > this_node.data
                     previous_node = this_node
-                    this_node = this_node.right_child
+                    this_node = this_right
             end
         end
     end
