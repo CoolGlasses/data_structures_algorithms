@@ -127,6 +127,23 @@ class Tree
             end
         end
     end
+
+    def level_order(&block)
+        this_node = @root
+        array_of_nodes = [this_node]
+
+        array_of_nodes.each do |node|
+            if node.right_child != nil
+                array_of_nodes << node.right_child
+            end
+            if node.left_child != nil
+                array_of_nodes << node.right_child
+            end
+            block.call at(node)
+        end
+
+
+    end
 end
 
 #think russian nested dolls but with two inner compartments
