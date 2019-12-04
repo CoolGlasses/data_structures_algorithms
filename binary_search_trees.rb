@@ -128,6 +128,7 @@ class Tree
         end
     end
 
+
     def level_order
         this_node = @root
         array_of_nodes = [this_node]
@@ -147,20 +148,47 @@ class Tree
         return array_of_nodes if !block_given?
     end
 
+        # def prune(node) ##function that finds a leaf and removes it
+    #     this_node = node
+    #     this_right = this_node.right_child
+    #     this_left = this_node.left_child
+
+    #     if this_left == nil
+    #         return this_node
+    #     else
+    #         min_Value(this_left)
+    #     end
+    # end
+
     def inorder
         this_node = @root
-        this_right = this_node.right_child
-        this_left = this_node.left_child
         array_of_nodes = []
 
         finished = false
         while !finished
+            this_right = this_node.right_child
+            this_left = this_node.left_child
+
             if this_left != nil
+                previous_node = this_node
                 this_node = this_left
-            elsif this_right != nil && this_node != @root
+            elsif this_right != nil
+                previous_node = this_node
                 this_node = this_right
-            elsif this_left == nil && this_right == nil
+            else
                 array_of_nodes << this_node
+                previous_node = this_node
+                if this_node == previous_node.left_child
+                    previous_node.left_child = nil
+                else
+                    previous_node.right_child = nil
+                end
+            end
+
+            ###how do I end this?!
+
+
+
 
         return array_of_nodes if !block_given?
     end
