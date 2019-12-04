@@ -47,7 +47,7 @@ class Tree
         if this_left == nil
             return this_node
         else
-            min_Value(this_node)
+            min_Value(this_left)
         end
     end
 
@@ -144,12 +144,25 @@ class Tree
             end
         end
 
-        if !block_given?
-            return array_of_nodes
-        end
+        return array_of_nodes if !block_given?
     end
 
     def inorder
+        this_node = @root
+        this_right = this_node.right_child
+        this_left = this_node.left_child
+        array_of_nodes = []
+
+        finished = false
+        while !finished
+            if this_left != nil
+                this_node = this_left
+            elsif this_right != nil && this_node != @root
+                this_node = this_right
+            elsif this_left == nil && this_right == nil
+                array_of_nodes << this_node
+
+        return array_of_nodes if !block_given?
     end
 
     def preorder
@@ -158,7 +171,15 @@ class Tree
     def postorder
     end
 
-    
+    def depth(node)
+    end
+
+    def balanced?
+    end
+
+    def rebalance!
+    end
+
 end
 
 #think russian nested dolls but with two inner compartments
