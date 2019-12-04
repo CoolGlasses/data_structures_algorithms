@@ -112,6 +112,20 @@ class Tree
     end
 
     def find(value)
+        this_node = @root
+
+        found = false
+        while !found
+
+            if value < this_node.data
+                this_node = this_node.left_child
+            elsif value > this_node.data
+                this_node = this_node.right_child
+            else
+                found = true
+                return this_node
+            end
+        end
     end
 end
 
