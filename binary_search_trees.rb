@@ -160,55 +160,92 @@ class Tree
         end
     end
 
-    def inorder
-        this_node = @root
-        array_of_nodes = []
+    def inorder(node=@root)
+        this_node = node
+        this_right = this_node.right_child
+        this_left = this_node.left_child
 
-        finished = false
-        while !finished
-            this_right = this_node.right_child
-            this_left = this_node.left_child
-
-            if this_left != nil
-                previous_node = this_node
-                this_node = this_left
-            elsif this_node == @root
-                array_of_nodes << this_node
-                this_node = this_right
-            elsif this_right != nil
-                previous_node = this_node
-                this_node = this_right
-            else
-                array_of_nodes << this_node
-                
-                if this_node == max_value(@root)
-                    finished = true
-                else
-                    this_node = previous_node
-                
-                    if this_node == previous_node.left_child
-                        previous_node.left_child = nil
-                    else
-                        previous_node.right_child = nil
-                    end
-                end
-            end
-        end
-        
-        if block_given?
-            array_of_nodes.each do |node|
-                yield at(node)
-            end
+        if this_left != nil
+            inorder(this_left)
+        elsif this_left == nil #is this right?  Traverse Left, Root, Traverse Right... is this the root?
+            return this_node
         else
-            return array_of_nodes
+            inorder(this_right)
         end
     end
 
-    def preorder
+    def preorder(node=@root)
+        this_node = node
+        this_right = this_node.right_child
+        this_left = this_node.left_child
+
+        if this_node == node
+            return this node
+        elsif this_left != nil
+            inorder(this_left)
+        else
+            inorder(this_right)
+        end
     end
 
-    def postorder
+    def postorder(node=@root)
+        this_node = node
+        this_right = this_node.right_child
+        this_left = this_node.left_child
+
+        if this_left != nil
+            inorder(this_left)
+        elsif this_right != nil
+            inorder(this_right)
+        else
+            return this_node
+        end
     end
+        
+    # def inorder 
+        # this_node = @root
+        # array_of_nodes = []
+
+        # finished = false
+        # while !finished
+        #     this_right = this_node.right_child
+        #     this_left = this_node.left_child
+
+        #     if this_left != nil
+        #         previous_node = this_node
+        #         this_node = this_left
+        #     elsif this_node == @root
+        #         array_of_nodes << this_node
+        #         this_node = this_right
+        #     elsif this_right != nil
+        #         previous_node = this_node
+        #         this_node = this_right
+        #     else
+        #         array_of_nodes << this_node
+                
+        #         if this_node == max_value(@root)
+        #             finished = true
+        #         else
+        #             this_node = previous_node
+                
+        #             if this_node == previous_node.left_child
+        #                 previous_node.left_child = nil
+        #             else
+        #                 previous_node.right_child = nil
+        #             end
+        #         end
+        #     end
+        # end
+        
+        # if block_given?
+        #     array_of_nodes.each do |node|
+        #         yield at(node)
+        #     end
+        # else
+        #     return array_of_nodes
+        # end
+    # end
+
 
     def depth(node)
     end
