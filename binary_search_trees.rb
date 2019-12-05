@@ -47,7 +47,7 @@ class Tree
         if this_left == nil
             return this_node
         else
-            min_Value(this_left)
+            min_value(this_left)
         end
     end
 
@@ -269,7 +269,16 @@ class Tree
         end
     end
 
-    def balanced?
+    def balanced?(node)
+        left_level_count = depth(min_Value(node))
+        right_level_count = depth(max_value(node))
+
+
+        if right_level_count == left_level_count || right_level_count + 1 == left_level_count || right_level_count == left_level_count + 1
+            return true
+        else
+            return false
+        end
     end
 
     def rebalance!
