@@ -248,6 +248,25 @@ class Tree
 
 
     def depth(node)
+        level_count = 0
+        this_node = @root
+        this_right = this_node.right_child
+        this_left = this_node.left_child
+
+        found = false
+        while !found
+
+            if node.data < this_node.data
+                this_node = this_left
+                level_count += 1
+            elsif node.data > this_node.data
+                this_node = this_right
+                level_count += 1
+            else
+                found = true
+                return level_count
+            end
+        end
     end
 
     def balanced?
