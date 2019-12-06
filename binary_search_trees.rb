@@ -1,7 +1,9 @@
+require "byebug"
+
 class Node
     attr_accessor :left_child, :right_child, :data
 
-    def initilaize(left, right, data)
+    def initialize(left, right, data)
         @left_child = left
         @right_child = right
         @data = data
@@ -39,17 +41,7 @@ class Tree
         end
     end
 
-    def min_value(node)
-        this_node = node
-        this_right = this_node.right_child
-        this_left = this_node.left_child
 
-        if this_left == nil
-            return this_node
-        else
-            min_value(this_left)
-        end
-    end
 
     def delete(value)
         this_node = @root
@@ -75,7 +67,7 @@ class Tree
                     deleted = true
                     @root = this_left
                 else
-                    successor = min_Value(this_right)
+                    successor = min_value(this_right)
                     this_right.left_child = successor.right_child
                     successor.right_child = this_right
                     successor.left_child = this_left
@@ -92,7 +84,7 @@ class Tree
                     deleted = true
 
                 elsif previous_left == this_node && this_right != nil
-                    successor = min_Value(this_right)
+                    successor = min_value(this_right)
                     successor.right_child = this_right
                     successor.left_child = this_left
                     previous_left = successor
@@ -128,24 +120,16 @@ class Tree
         end
     end
 
+    def min_value(node)
+        this_node = node
+        this_right = this_node.right_child
+        this_left = this_node.left_child
 
-    def level_order
-        this_node = @root
-        array_of_nodes = [this_node]
-
-        array_of_nodes.each do |node|
-            if node.right_child != nil
-                array_of_nodes << node.right_child
-            end
-            if node.left_child != nil
-                array_of_nodes << node.right_child
-            end
-            if block_given?
-                yield at(node)
-            end
+        if this_left == nil
+            return this_node
+        else
+            min_value(this_left)
         end
-
-        return array_of_nodes if !block_given?
     end
 
     def max_value(node)
@@ -180,7 +164,7 @@ class Tree
         this_left = this_node.left_child
 
         if this_node == node
-            return this node
+            return this_node
         elsif this_left != nil
             inorder(this_left)
         else
@@ -250,11 +234,12 @@ class Tree
     def depth(node)
         level_count = 0
         this_node = @root
-        this_right = this_node.right_child
-        this_left = this_node.left_child
+        
 
         found = false
         while !found
+            this_right = this_node.right_child
+            this_left = this_node.left_child
 
             if node.data < this_node.data
                 this_node = this_left
@@ -269,8 +254,8 @@ class Tree
         end
     end
 
-    def balanced?(node)
-        left_level_count = depth(min_Value(node))
+    def balanced?(node=@root)
+        left_level_count = depth(min_value(node))
         right_level_count = depth(max_value(node))
 
 
@@ -281,7 +266,28 @@ class Tree
         end
     end
 
+    def level_order
+        this_node = @root
+        array_of_nodes = [this_node]
+
+        array_of_nodes.each do |node|
+            if node.right_child != nil
+                array_of_nodes << node.right_child
+            end
+            if node.left_child != nil
+                array_of_nodes << node.left_child
+            end
+            if block_given?
+                yield at(node)
+            end
+        end
+
+        return array_of_nodes if !block_given?
+    end
+
     def rebalance!
+        array_of_nodes = level_order()
+        @root = build_tree(array_of_nodes)
     end
 
 end
