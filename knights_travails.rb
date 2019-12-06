@@ -6,7 +6,7 @@ class Board
         @board = create_board(@size)
     end
 
-    def board
+    def board #a 2d array of potential positions
         @board
     end
 
@@ -38,31 +38,55 @@ class Knight
 end
 
 class MoveSet
-    attr_accessor :knight
-    
     def initialize(board)
         @board = board
     end
 
-    def knight(board=@board)
+    def create_connections(@board, piece)
+        connections = []
+        size = sqrt(@board.length)
+        
+        if piece == "knight"
+            @board.each do |coordinate_pair|
+                x = coordinate_pair[0]
+                y = coordinate_pair[1]
+                case coordinate_pair
+                    when (x + 2 >= 0 && x + 2 <= size ) && (y + 1 >= 0 && y + 1 <= size)
+                        connections << [x + 2, y + 1]
+                    when (x + 2 >= 0 && x + 2 <= size ) && (y - 1 >= 0 && y - 1 <= size)
+                        connections << [x + 2, y - 1]
+                    when (x - 2 >= 0 && x - 2 <= size ) && (y + 1 >= 0 && y + 1 <= size)
+                        connections << [x - 2, y + 1]
+                    when (x - 2 >= 0 && x - 2 <= size ) && (y - 1 >= 0 && y - 1 <= size)
+                        connections << [x - 2, y - 1]
+                    when (x + 1 >= 0 && x + 1 <= size ) && (y + 2 >= 0 && y + 2 <= size)
+                        connections << [x + 1, y + 2]
+                    when (x + 1 >= 0 && x + 1 <= size ) && (y - 2 >= 0 && y - 2 <= size)
+                        connections << [x + 1, y - 2]
+                    when (x - 1 >= 0 && x - 1 <= size ) && (y + 2 >= 0 && y + 2 <= size)
+                        connections << [x - 1, y + 2]
+                    when (x - 1 >= 0 && x - 1 <= size ) && (y - 2 >= 0 && y - 2 <= size)
+                        connections << [x - 1, y - 2]
+                end
+            end
+        else
+            p "unknown piece"
+        end
+        return connections
     end
 end
 
-class SquareSpace
-    def initialize(piece, location)
+class Node
+    attr_reader :piece, :location, :connections
+    
+    def intitialize(piece, location, connections)
         @piece = piece
         @location = location
-        @connections = nil
-    end
-
-    def connections
-        @connections
-    end
-
-    def location
-        @location
+        @connections = connections
     end
 end
+
+
 
 def knight_moves(square1, square2)
 end
