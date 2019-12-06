@@ -23,14 +23,14 @@ class Tree
 
             if value < this_node.data
                 if this_node.left_child == nil
-                    this_node.left_child = Node.new(nil, nil, array[i])
+                    this_node.left_child = Node.new(nil, nil, value)
                     inserted = true
                 else
                     this_node = this_node.left_child
                 end
             elsif value > this_node.data
                 if this_node.right_child == nil
-                    this_node.right_child = Node.new(nil, nil, array[i])
+                    this_node.right_child = Node.new(nil, nil, value)
                     inserted = true
                 else
                     this_node = this_node.right_child
@@ -186,51 +186,6 @@ class Tree
         end
     end
         
-    # def inorder 
-        # this_node = @root
-        # array_of_nodes = []
-
-        # finished = false
-        # while !finished
-        #     this_right = this_node.right_child
-        #     this_left = this_node.left_child
-
-        #     if this_left != nil
-        #         previous_node = this_node
-        #         this_node = this_left
-        #     elsif this_node == @root
-        #         array_of_nodes << this_node
-        #         this_node = this_right
-        #     elsif this_right != nil
-        #         previous_node = this_node
-        #         this_node = this_right
-        #     else
-        #         array_of_nodes << this_node
-                
-        #         if this_node == max_value(@root)
-        #             finished = true
-        #         else
-        #             this_node = previous_node
-                
-        #             if this_node == previous_node.left_child
-        #                 previous_node.left_child = nil
-        #             else
-        #                 previous_node.right_child = nil
-        #             end
-        #         end
-        #     end
-        # end
-        
-        # if block_given?
-        #     array_of_nodes.each do |node|
-        #         yield at(node)
-        #     end
-        # else
-        #     return array_of_nodes
-        # end
-    # end
-
-
     def depth(node)
         level_count = 0
         this_node = @root
@@ -287,7 +242,13 @@ class Tree
 
     def rebalance!
         array_of_nodes = level_order()
-        @root = build_tree(array_of_nodes)
+        data_of_nodes = []
+
+        array_of_nodes.each do |node|
+            data_of_nodes << node.data
+        end
+
+        @root = build_tree(data_of_nodes)
     end
 
 end

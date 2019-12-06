@@ -7,15 +7,23 @@ print array
 balanced = tree.balanced?
 
 if balanced == true
+    puts
     puts "Tree is balanced!"
+    puts
 else
+    puts
     puts "Tree is NOT balanced!"
+    puts
 end
 
-print tree.level_order
+p tree.level_order
+puts
 p tree.inorder
+puts
 p tree.preorder
+puts
 p tree.postorder
+puts
 
 def unbalance(tree)
     5.times do 
@@ -25,15 +33,25 @@ end
 
 balanced = tree.balanced?
 
-while balanced
+if balanced
     unbalance(tree)
-
-    if tree.balanced? == true
-        balanced = true
-    end
 end
 
+balanced = tree.balanced?
+
+if !balanced
+    tree.rebalance!
+    balanced = tree.balanced?
+end
+
+puts "Tree is now balanced again!"
+
+
 p tree.level_order
+puts
 p tree.inorder
+puts
 p tree.preorder
+puts
 p tree.postorder
+puts
