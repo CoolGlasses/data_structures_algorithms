@@ -24,12 +24,43 @@ class Board
 end
 
 class Knight
-    def initialize
+    attr_accessor :name, :current_location
+
+    def initialize(name="Heath", current_location=[0,0])
+        @name = name
+        @current_location = current_location
+        @possible_moves = []
     end
+
+    def possible_moves
+    end
+
 end
 
 class MoveSet
-    def initialize
+    attr_accessor :knight
+    
+    def initialize(board)
+        @board = board
+    end
+
+    def knight(board=@board)
+    end
+end
+
+class SquareSpace
+    def initialize(piece, location)
+        @piece = piece
+        @location = location
+        @connections = nil
+    end
+
+    def connections
+        @connections
+    end
+
+    def location
+        @location
     end
 end
 
