@@ -45,11 +45,16 @@ class Knight
     def find_path(final_node)
         this_node = final_node
         path = []
-        if this_node.parent == nil
-            return path
-        else
-            path << this_node
-            this_node = this_node.parent
+        found = false
+        while !found
+            if this_node.parent == nil
+                found = true
+                path << this_node.position
+                return path
+            else
+                path << this_node.position
+                this_node = this_node.parent
+            end
         end
     end
 
@@ -59,13 +64,15 @@ class Knight
         this_node = start
 
         while !finished
-            debugger
             if this_node.position == finish
                 path = find_path(this_node)
                 move_count = path.length - 1
                 puts "You can move there in #{move_count} moves.  Here is the path you took to get there:"
+                path.reverse!
                 path.each do |parent|
-                    puts parent
+                    puts
+                    print parent
+                    puts
                 end
                 finished = true
             else
