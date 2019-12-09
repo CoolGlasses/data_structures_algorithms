@@ -1,21 +1,29 @@
 require "byebug"
 
-class Board
-    def initialize(size=8)
+class Node
+    attr_reader :position
+    attr_accessor :parent, :children, :piece_present
+
+    def intialize(position, parent=nil)
+        @position = position
+        @parent = parent
+        @children = []
+        @piece_present = false
+    end
+end
+
+class Board 
+    def intialize(size)
         @size = size
         @board = create_board(@size)
-    end
-
-    def board #a 2d array of potential positions
-        @board
     end
 
     def create_board(size)
         finally = []
 
-        (0...size).times do |num1|
-            (0...size).times do |num2|
-                finally << [num1, num2]
+        (0...size).each do |x|
+            (0...size).each do |y|
+                finally << [x, y]
             end
         end
 
@@ -24,69 +32,13 @@ class Board
 end
 
 class Knight
-    attr_accessor :name, :current_location
+    attr_accessor :position
+    attr_reader :MOVES
 
-    def initialize(name="Heath", current_location=[0,0])
-        @name = name
-        @current_location = current_location
-        @possible_moves = []
+    @@MOVES = [[2, 1], [2, -1], [-2, 1], [-2, -1], [1, 2], [1, -2], [-1, 2], [-1, -2]]
+
+    def intialize(initial_pos)
+        @initial_pos = initial_pos
+        @position = @initial_pos
     end
-
-    def possible_moves
-    end
-
-end
-
-class MoveSet
-    def initialize(board)
-        @board = board
-    end
-
-    def create_connections(@board, piece)
-        connections = []
-        size = sqrt(@board.length)
-        
-        if piece == "knight"
-            @board.each do |coordinate_pair|
-                x = coordinate_pair[0]
-                y = coordinate_pair[1]
-                case coordinate_pair
-                    when (x + 2 >= 0 && x + 2 <= size ) && (y + 1 >= 0 && y + 1 <= size)
-                        connections << [x + 2, y + 1]
-                    when (x + 2 >= 0 && x + 2 <= size ) && (y - 1 >= 0 && y - 1 <= size)
-                        connections << [x + 2, y - 1]
-                    when (x - 2 >= 0 && x - 2 <= size ) && (y + 1 >= 0 && y + 1 <= size)
-                        connections << [x - 2, y + 1]
-                    when (x - 2 >= 0 && x - 2 <= size ) && (y - 1 >= 0 && y - 1 <= size)
-                        connections << [x - 2, y - 1]
-                    when (x + 1 >= 0 && x + 1 <= size ) && (y + 2 >= 0 && y + 2 <= size)
-                        connections << [x + 1, y + 2]
-                    when (x + 1 >= 0 && x + 1 <= size ) && (y - 2 >= 0 && y - 2 <= size)
-                        connections << [x + 1, y - 2]
-                    when (x - 1 >= 0 && x - 1 <= size ) && (y + 2 >= 0 && y + 2 <= size)
-                        connections << [x - 1, y + 2]
-                    when (x - 1 >= 0 && x - 1 <= size ) && (y - 2 >= 0 && y - 2 <= size)
-                        connections << [x - 1, y - 2]
-                end
-            end
-        else
-            p "unknown piece"
-        end
-        return connections
-    end
-end
-
-class Node
-    attr_reader :piece, :location, :connections
-    
-    def intitialize(piece, location, connections)
-        @piece = piece
-        @location = location
-        @connections = connections
-    end
-end
-
-
-
-def knight_moves(square1, square2)
 end
